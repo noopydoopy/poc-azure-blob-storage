@@ -4,7 +4,52 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <h2>Container List.</h2>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <ul>
+                @{
+                    foreach (var container in Model.Containers)
+                    {
+                        <li><a href="/Containers/@container.Name/Blobs">@container.Name</a></li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="alert alert-info small">
+                <i class="fa-solid fa-circle-info"></i> Container name only accept the <b>small letter</b>
+            </div>
+            <form method="post">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ContainerName">Container Name</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" asp-for="ContainerName" id="txtContainerName" />
+                    </div>
+                    <div class="col-3">
+                        <button id="btnSubmit" type="submit" class="btn btn-primary" disabled>Create</button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(window).ready(() => {
+            $('#txtContainerName').keyup((e) => {
+                e.target.value = e.target.value.toLowerCase();
+                if (e.target.value)
+                    $('#btnSubmit').removeAttr('disabled');
+                else
+                    $('#btnSubmit').attr('disabled');
+            })
+        });
+    </script>
+}

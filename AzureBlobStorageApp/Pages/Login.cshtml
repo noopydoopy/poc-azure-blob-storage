@@ -1,0 +1,47 @@
+﻿@page
+@model AzureBlobStorageApp.Pages.LoginModel
+@{
+    string Error = ViewData["Error"].ToString();
+    ViewData["Title"] = "Login";
+}
+
+
+<div class="container border p-3">
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="LoginViewModel.ConnectionString"></label>
+            </div>
+            <div class="col-6">
+                <input type="text" class="form-control" asp-for="LoginViewModel.ConnectionString" id="txtConnString" />
+            </div>
+            <span class="text-danger" asp-validation-for="LoginViewModel.ConnectionString"></span>
+        </div>
+        <div class="form-grou row">
+            <div class="col-3">
+                <button id="btnSubmit" type="submit" class="btn btn-primary" disabled>Login</button>
+            </div>
+        </div>
+    </form>
+    @if (!string.IsNullOrEmpty(Error))
+    {
+        <div class="text-center">
+            <span class="text-danger font-weight-bold">@Error</span>
+        </div>
+    }
+
+</div>
+@section Scripts {
+    <script>
+        $(window).ready(() => {
+            $('#txtConnString').keyup((e) => {
+                console.log(e.target.value)
+                if (e.target.value)
+                    $('#btnSubmit').removeAttr('disabled');
+                else
+                    $('#btnSubmit').attr('disabled');
+            })
+        });
+    </script>
+}

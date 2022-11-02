@@ -1,13 +1,10 @@
+using AzureBlobStorageApp.Configs;
+using AzureBlobStorageApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AzureBlobStorageApp
 {
@@ -23,7 +20,30 @@ namespace AzureBlobStorageApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("AADCookies").AddCookie("AADCookies", options =>
+            {
+                options.Cookie.Name = "AADCookies";
+                options.LoginPath = "/Login";
+            });
+
             services.AddRazorPages();
+            services.Configure<AzureADBlobsConfig>(Configuration.GetSection(AzureADBlobsConfig.SECTION));
+
+            //services.AddAzureClients(clientBuilder =>
+            //{
+
+            //    // Add a storage account client
+            //    clientBuilder.AddBlobServiceClient(Configuration.GetSection("Storage"));
+
+            //    // Use DefaultAzureCredential by default
+            //    clientBuilder.UseCredential(new DefaultAzureCredential());
+
+            //    // Set up any default settings
+            //    clientBuilder.ConfigureDefaults(Configuration.GetSection("AzureDefaults"));
+            //});
+
+            // Services
+            services.AddScoped<IAzureStorageService, AzureStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +65,9 @@ namespace AzureBlobStorageApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
