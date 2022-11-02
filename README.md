@@ -28,3 +28,9 @@ https://localhost:5001
 After the app is running then you can put your azure blob storage connectionstring to use the app and then enjoy! :wink:
 
 To find your storage key access you can go into your azure storage account **Security + Networking** then **Access Keys**
+
+# References
+- [Azure Storage Blobs](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction?source=recommendations)
+- [Azure Storage Account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview)
+- [Razor Pages](https://learn.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/razor-pages-start?view=aspnetcore-6.0&tabs=visual-studio)
+- [Storage Custom Domain](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-custom-domain-name?tabs=azure-portal)
