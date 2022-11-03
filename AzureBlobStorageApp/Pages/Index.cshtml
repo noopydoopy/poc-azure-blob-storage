@@ -12,14 +12,14 @@
                 @{
                     foreach (var container in Model.Containers)
                     {
-                        <li><a href="/Containers/@container.Name/Blobs">@container.Name</a></li>
+                                <li><a href="/Containers/@container.Name/Blobs">@container.Name</a></li>
                     }
                 }
             </ul>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="alert alert-info small">
-                <i class="fa-solid fa-circle-info"></i> Container name only accept the <b>small letter</b>
+                <i class="fa-solid fa-circle-info"></i> Container name only accept the <b>small letter</b> and without <b>spaces and special characters</b>
             </div>
             <form method="post">
                 <div class="form-group row">
@@ -44,11 +44,15 @@
     <script>
         $(window).ready(() => {
             $('#txtContainerName').keyup((e) => {
-                e.target.value = e.target.value.toLowerCase();
-                if (e.target.value)
-                    $('#btnSubmit').removeAttr('disabled');
-                else
-                    $('#btnSubmit').attr('disabled');
+                const regex = new RegExp('[^a-zA-Z0-9]');
+                e.target.value = e.target.value.toLowerCase().replace(/\s/g,'');
+                if (regex.test(e.target.value)) {
+                     $('#btnSubmit').attr('disabled', true);
+                } else {
+                      $('#btnSubmit').removeAttr('disabled');
+                }
+                  
+                    
             })
         });
     </script>
