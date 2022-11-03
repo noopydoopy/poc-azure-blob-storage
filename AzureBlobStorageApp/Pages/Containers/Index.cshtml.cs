@@ -56,7 +56,7 @@ namespace AzureBlobStorageApp.Pages.Containers
         public async Task<IActionResult> OnPostAsync(string containerName)
         {
             var connString = User.Identity.Name;
-            if (FromFile.Length > 0)
+            if (FromFile != null)
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
@@ -64,20 +64,15 @@ namespace AzureBlobStorageApp.Pages.Containers
                     await _azureStorageService.UploadBlobAsync(connString, containerName, FromFile.FileName, FromFile.ContentType, memoryStream);
                 }
             }
-            var blobItems = await _azureStorageService.GetBlobByContainerAsync(connString, containerName);
-            Items = blobItems;
 
-            return Page();
+            return RedirectToPage("./Index");
         }
 
         public async Task<IActionResult> OnGetDeleteFile(string containerName, string fileName)
         {
             var connString = User.Identity.Name;
             await _azureStorageService.DeleteBlobAsync(connString, containerName, fileName);
-
-            var blobItems = await _azureStorageService.GetBlobByContainerAsync(connString, containerName);
-            Items = blobItems;
-            return Page();
+            return RedirectToPage("./Index");
         }
     }
 }

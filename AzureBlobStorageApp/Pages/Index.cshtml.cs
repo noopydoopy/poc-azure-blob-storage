@@ -37,7 +37,7 @@ namespace AzureBlobStorageApp.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             var connString = User.Identity.Name;
             if (!string.IsNullOrEmpty(ContainerName))
@@ -45,10 +45,7 @@ namespace AzureBlobStorageApp.Pages
                 await _azureStorageService.CreateContainerAsync(connString, ContainerName);
             }
 
-            var containers = await _azureStorageService.GetBlobContainerAsync(connString);
-            Containers = containers;
-
-            return Page();
+            return RedirectToPage("/Index");
         }
     }
 }
