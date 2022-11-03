@@ -12,7 +12,7 @@ Running the app depends on user experience, better to run by debugging or consol
 ```bash
 cd .\poc-azure-blob-storage\AzureBlobStorageApp\
 dotnet restore
-dotnet run
+dotnet run --launch-profile "AzureBlobStorageApp"
 ```
 Then it will serve up the application via
 ```http

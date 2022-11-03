@@ -20,6 +20,8 @@ namespace AzureBlobStorageApp.Pages
         [BindProperty]
         public LoginViewModel LoginViewModel { get; set; }
 
+        public string Error { get; set; }
+
         public LoginModel(IAzureStorageService azureStorageService, ILogger<LoginModel> logger)
         {
             _azureStorageService = azureStorageService;
@@ -34,7 +36,7 @@ namespace AzureBlobStorageApp.Pages
                     return RedirectToPage(ReturnUrl);
                 return RedirectToPage("/Index");
             }
-            ViewData["Error"] = "";
+            Error = "";
             return Page();
         }
 
@@ -45,7 +47,7 @@ namespace AzureBlobStorageApp.Pages
                 bool isConnectionValid = await _azureStorageService.VerifyConnectionStringAsync(LoginViewModel.ConnectionString);
                 if (isConnectionValid)
                 {
-                    ViewData["Error"] = "";
+                    Error = "";
                     var claims = new List<Claim>() {
                         new Claim(ClaimTypes.Name, LoginViewModel.ConnectionString)
                     };
@@ -57,7 +59,7 @@ namespace AzureBlobStorageApp.Pages
                 }
                 else
                 {
-                    ViewData["Error"] = "Your connection string is not valid.";
+                    Error = "Your connection string is not valid.";
                 }
             }
             return Page();

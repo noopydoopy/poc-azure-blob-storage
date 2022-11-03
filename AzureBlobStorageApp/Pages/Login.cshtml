@@ -1,7 +1,6 @@
 ﻿@page
 @model AzureBlobStorageApp.Pages.LoginModel
 @{
-    string Error = ViewData["Error"].ToString();
     ViewData["Title"] = "Login";
 }
 
@@ -24,10 +23,10 @@
             </div>
         </div>
     </form>
-    @if (!string.IsNullOrEmpty(Error))
+    @if (!string.IsNullOrEmpty(Model.Error))
     {
         <div class="text-center">
-            <span class="text-danger font-weight-bold">@Error</span>
+            <span class="text-danger font-weight-bold">@Model.Error</span>
         </div>
     }
 
