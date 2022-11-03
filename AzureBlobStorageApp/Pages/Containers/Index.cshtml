@@ -1,4 +1,4 @@
-﻿@page "{containerName}/Blobs"
+﻿@page "{containerName}/Blobs/{handler?}/{fileName?}"
 @model AzureBlobStorageApp.Pages.Containers.IndexModel
 @{
     ViewData["Title"] = ViewContext.RouteData.Values["containerName"].ToString() + " File List";
