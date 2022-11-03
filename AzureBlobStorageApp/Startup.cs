@@ -26,7 +26,7 @@ namespace AzureBlobStorageApp
                 options.LoginPath = "/Login";
             });
 
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
             services.Configure<AzureADBlobsConfig>(Configuration.GetSection(AzureADBlobsConfig.SECTION));
 
             //services.AddAzureClients(clientBuilder =>
@@ -59,6 +59,11 @@ namespace AzureBlobStorageApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Error page by status code.
+            //app.UseStatusCodePages("text/html", "<h1>Error! Status Code {0}</h1>");
+            // Use for reexecute the custom error page depened on error code
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}"); 
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

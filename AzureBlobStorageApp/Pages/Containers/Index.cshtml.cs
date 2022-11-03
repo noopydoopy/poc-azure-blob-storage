@@ -39,7 +39,7 @@ namespace AzureBlobStorageApp.Pages.Containers
         {
             if(string.IsNullOrEmpty(fileName))
             {
-                return Page();
+                return NotFound();
             }
 
             var connString = User.Identity.Name;
